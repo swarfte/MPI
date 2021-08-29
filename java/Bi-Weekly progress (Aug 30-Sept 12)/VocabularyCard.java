@@ -2,7 +2,7 @@
  * @Author: Chau Lap Tou
  * @Date: 2021-08-25 22:54:39
  * @LastEditors: Chau Lap Tou
- * @LastEditTime: 2021-08-29 15:42:26
+ * @LastEditTime: 2021-08-29 17:30:16
  * @python_exe: pyinstaller -F -w file_name.py -p C:/python/lib/site-packages 
  * @java_class: javac -encoding utf-8 file_name.java
  * @java_jar: jar -cvmf manifest.txt name.jar *.class
@@ -18,8 +18,7 @@ import java.io.*;
 
 public class VocabularyCard{
     public static void main(String[] args) throws Exception {
-        VocabularyCardGUI VC = new VocabularyCardGUI();
-        VC.startGUI();
+        new VocabularyCardGUI().startGUI();
     }
 }
 
