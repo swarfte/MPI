@@ -1,4 +1,3 @@
-package source;
 /*
  * @Author: Chau Lap Tou
  * @Date: 2021-08-25 22:54:39
@@ -21,7 +20,6 @@ public class VocabularyCard{
     public static void main(String[] args) throws Exception {
         VocabularyCardGUI VC = new VocabularyCardGUI();
         VC.startGUI();
-
     }
 }
 
