@@ -2,7 +2,7 @@
  * @Author: Swarfte
  * @Date: 2021-08-25 22:54:39
  * @LastEditors: Swarfte
- * @LastEditTime: 2021-08-29 00:53:59
+ * @LastEditTime: 2021-08-29 13:19:51
  * @python_exe: pyinstaller -F -w file_name.py -p C:/python/lib/site-packages 
  * @java_class: javac -encoding utf-8 file_name.java
  * @java_jar: jar -cvmf manifest.txt name.jar *.class
@@ -15,23 +15,19 @@ import java.nio.charset.*;
 import java.awt.event.*;
 import java.util.*;
 import java.io.*;
-import java.lang.reflect.Method;
 
 public class VocabularyCard{
     public static void main(String[] args) throws Exception {
         VocabularyCardGUI VC = new VocabularyCardGUI();
         VC.startGUI();
 
-        // //!測試用
-        // Method VCTest =  VC.getClass().getDeclaredMethod("test");
-        // VCTest.setAccessible(true);
-        // VCTest.invoke(VC);
     }
 }
 
 class VocabularyCardGUI{
-    int width = 700;
-    int height = 300;
+    int width = 1000;//寬度
+    int height = 400;//高度
+    int fontSize = 125;//字體大小
     JFrame mainFrame = new JFrame("英文生字卡");//主框架
     JPanel mainPanel = new JPanel();//主畫面
     JLabel wordText = new JLabel();//顯示生字
@@ -45,12 +41,7 @@ class VocabularyCardGUI{
     ArrayList< String > englishWord = new ArrayList < >();//存放單詞的英文
     boolean isChinese = true;//檢測目前的生字卡狀態
     int CurrentNumber = 0;//目前的生字位置
-
-    private void test(){
-        loadDictionary();
-        System.out.println(chineseWord.get(1));
-        System.out.println(englishWord.get(1));
-    }
+    int wordLength ;//檢測有多少個生字
 
     public void loadDictionary() {
         try {
@@ -62,6 +53,7 @@ class VocabularyCardGUI{
                 englishWord.add(key);
                 chineseWord.add(value);
             }
+            wordLength = englishWord.size();
         }catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,19 +66,22 @@ class VocabularyCardGUI{
     }
 
     public void buttonSet(){
+        lastButton.addActionListener(new lastListener());
         buttonPanel.add(lastButton);
 
         changeButton.addActionListener(new changeListener());
         buttonPanel.add(changeButton);
         
+        nextButton.addActionListener(new nextListener());
         buttonPanel.add(nextButton);
+
         buttonPanel.setBackground(Color.darkGray);
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         mainFrame.getContentPane().add(BorderLayout.SOUTH,buttonPanel);
     }
 
     public void textSet() {
-        wordText.setFont(new Font("Dialog",1,100));
+        wordText.setFont(new Font("Dialog",1,fontSize));
         wordText.setText(chineseWord.get(CurrentNumber));
         mainPanel.add(wordText);
         mainFrame.getContentPane().add(BorderLayout.CENTER,mainPanel);
@@ -100,7 +95,6 @@ class VocabularyCardGUI{
     }
 
     class changeListener implements ActionListener {
-        boolean isChinese = true;//檢測目前的生字卡狀態
         public void actionPerformed(ActionEvent ae){
             if (isChinese){
                 wordText.setText(englishWord.get(CurrentNumber));
@@ -111,16 +105,44 @@ class VocabularyCardGUI{
             }
         }
     }
-
+    
     class nextListener implements ActionListener {
         public void actionPerformed(ActionEvent ae){
-    
+            if (CurrentNumber < wordLength - 1 ){//不在最後一個單詞的位置
+                if (isChinese){
+                    wordText.setText(chineseWord.get(CurrentNumber + 1));
+                }else{
+                    wordText.setText(englishWord.get(CurrentNumber + 1));
+                }
+                CurrentNumber++;
+            }else{
+                CurrentNumber = 0 ;
+                if (isChinese){
+                    wordText.setText(chineseWord.get(CurrentNumber));
+                }else {
+                    wordText.setText(englishWord.get(CurrentNumber));
+                }
+            }
         }
     }
 
     class lastListener implements ActionListener {
         public void actionPerformed(ActionEvent ae){
-            
+            if (CurrentNumber > 0){//不在第一個單詞的位置
+                if (isChinese){
+                    wordText.setText(chineseWord.get(CurrentNumber - 1));
+                }else {
+                    wordText.setText(englishWord.get(CurrentNumber - 1));
+                }
+                CurrentNumber--;
+            }else {
+                CurrentNumber = wordLength - 1;
+                if (isChinese){
+                    wordText.setText(chineseWord.get(CurrentNumber));
+                }else {
+                    wordText.setText(englishWord.get(CurrentNumber));
+                }
+            }
         }
     }
 }
