@@ -2,9 +2,9 @@
  * @Author: Chau Lap Tou
  * @Date: 2021-08-25 22:54:39
  * @LastEditors: Chau Lap Tou
- * @LastEditTime: 2021-08-30 09:45:06
+ * @LastEditTime: 2021-09-01 17:22:47
  * @python_exe: pyinstaller -F -w file_name.py -p C:/python/lib/site-packages 
- * @java_class: javac -encoding utf-8 file_name.java
+ * @java_class: javac -encoding utf-8 *.java
  * @java_jar: jar -cvmf manifest.txt name.jar *.class
  * @GithubName: Swarfte
  */
@@ -29,6 +29,7 @@ class VocabularyCardGUI{
     private JFrame mainFrame = new JFrame("英文生字卡");//主框架
     private JPanel mainPanel = new JPanel();//主畫面
     private JLabel wordText = new JLabel();//顯示生字
+    private JLabel currentWordIndex = new JLabel();//目前生字的位置
     public String[] buttonName = {
         "reload","next","change","last","random"
     };//使用的按鈕
@@ -95,7 +96,18 @@ class VocabularyCardGUI{
         mainFrame.getContentPane().add(BorderLayout.SOUTH,buttonPanel);
     }
 
+    public void setWordIndex(){//顯示當前的生字
+        int number = currentNumber + 1;
+        String index = "" + number +"/"+ wordLength ;
+        currentWordIndex.setText(index);
+    }
+
     public void textSet() {//設定顯示文字區
+        currentWordIndex.setFont(buttonFont);
+        currentWordIndex.setForeground(Color.white);//設置字體為白色
+        buttonPanel.add(currentWordIndex);
+        setWordIndex();
+
         wordText.setFont(textFont);
         wordText.setText(chineseWord.get(currentNumber));
         mainPanel.add(wordText);
@@ -138,6 +150,8 @@ class VocabularyCardGUI{
                 currentNumber = 0 ;
                 showText(isChinese, currentNumber + 1);
             }
+
+            setWordIndex();
         }
     }
 
@@ -150,6 +164,8 @@ class VocabularyCardGUI{
                 currentNumber = wordLength - 1;
                 showText(isChinese, currentNumber);
             }
+            
+            setWordIndex();
         }
     }
 
@@ -157,6 +173,8 @@ class VocabularyCardGUI{
         public void actionPerformed(ActionEvent ae){
             currentNumber = (int) (Math.random() * (wordLength - 1));//在可選範圍內隨機找一個生字
             showText(isChinese, currentNumber);
+
+            setWordIndex();
         }
     }
 
@@ -164,6 +182,8 @@ class VocabularyCardGUI{
         public void actionPerformed(ActionEvent ae){
             loadDictionary();//初始化
             showText(isChinese, currentNumber);
+
+            setWordIndex();
         }
     }
 }
