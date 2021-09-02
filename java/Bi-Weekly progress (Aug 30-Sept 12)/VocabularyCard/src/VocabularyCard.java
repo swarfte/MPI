@@ -3,7 +3,7 @@
  * @Date: 2021-08-25 22:54:39
  * @LastEditors: Chau Lap Tou
  * @LastEditTime: 2021-09-01 17:22:47
- * @python_exe: pyinstaller -F -w file_name.py -p C:/python/lib/site-packages 
+ * @python_exe: pyinstaller -F -w file_name.py -p C:/python/lib/site-packages
  * @java_class: javac -encoding utf-8 *.java
  * @java_jar: jar -cvmf manifest.txt name.jar *.class
  * @GithubName: Swarfte
@@ -31,7 +31,7 @@ class VocabularyCardGUI{
     private JLabel wordText = new JLabel();//顯示生字
     private JLabel currentWordIndex = new JLabel();//目前生字的位置
     public String[] buttonName = {
-        "reload","next","change","last","random"
+        "reload","last","change","next","random"
     };//使用的按鈕
     private ArrayList < JButton > buttonList = new ArrayList<>();//存放按鈕的列表
     public Dimension buttonSize = new Dimension(150,50);//設置按鈕大小
@@ -140,7 +140,7 @@ class VocabularyCardGUI{
             }
         }
     }
-    
+
     class nextListener implements ActionListener {
         public void actionPerformed(ActionEvent ae){
             if (currentNumber < wordLength - 1 ){//不在最後一個單詞的位置
@@ -164,7 +164,7 @@ class VocabularyCardGUI{
                 currentNumber = wordLength - 1;
                 showText(isChinese, currentNumber);
             }
-            
+
             setWordIndex();
         }
     }
