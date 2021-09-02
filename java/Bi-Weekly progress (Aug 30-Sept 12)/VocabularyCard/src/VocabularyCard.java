@@ -43,6 +43,7 @@ class VocabularyCardGUI{
     private ArrayList< String > englishWord ;//存放單詞的英文
     public boolean isChinese = true;//檢測目前的生字卡狀態
     private int currentNumber;//目前的生字位置
+    private int lenCurrentNumber;//獲取目前生字的長度
     private int wordLength ;//檢測有多少個生字
 
     public void loadDictionary() {//加載資料
@@ -108,8 +109,9 @@ class VocabularyCardGUI{
         buttonPanel.add(currentWordIndex);
         setWordIndex();
 
-        wordText.setFont(textFont);
-        wordText.setText(chineseWord.get(currentNumber));
+        String word = chineseWord.get(currentNumber);
+        wordText.setText(word);
+        changeTextSize(word);
         mainPanel.add(wordText);
         mainFrame.getContentPane().add(BorderLayout.CENTER,mainPanel);
     }
@@ -121,12 +123,20 @@ class VocabularyCardGUI{
         buildGUI();
     }
 
+    public void changeTextSize(String word){
+        int len = word.length();
+        wordText.setFont(new Font("Dialog",1,200 - len * 5));
+    }
+
     public void showText(boolean choose , int index){//用作判斷顯示的文本
+        String word = "";
         if (choose){
-            wordText.setText(chineseWord.get(index));
+            word = chineseWord.get(index);
         }else {
-            wordText.setText(englishWord.get(index));
+            word = englishWord.get(index);
         }
+        changeTextSize(word);
+        wordText.setText(word);
     }
 
     class changeListener implements ActionListener {
@@ -138,6 +148,8 @@ class VocabularyCardGUI{
                 showText(true, currentNumber);
                 isChinese = true;
             }
+
+            setWordIndex();
         }
     }
 

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="VocabularyCard:jar">
+    <output-path>$PROJECT_DIR$/classes/artifacts/VocabularyCard_jar</output-path>
+    <root id="archive" name="VocabularyCard.jar">
+      <element id="module-output" name="VocabularyCard" />
+    </root>
+  </artifact>
+</component>
