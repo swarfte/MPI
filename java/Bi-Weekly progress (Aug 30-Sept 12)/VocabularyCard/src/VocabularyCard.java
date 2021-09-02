@@ -97,12 +97,6 @@ class VocabularyCardGUI{
         mainFrame.getContentPane().add(BorderLayout.SOUTH,buttonPanel);
     }
 
-    public void setWordIndex(){//顯示當前的生字
-        int number = currentNumber + 1;
-        String index = "" + number +"/"+ wordLength ;
-        currentWordIndex.setText(index);
-    }
-
     public void textSet() {//設定顯示文字區
         currentWordIndex.setFont(buttonFont);
         currentWordIndex.setForeground(Color.white);//設置字體為白色
@@ -111,7 +105,7 @@ class VocabularyCardGUI{
 
         String word = chineseWord.get(currentNumber);
         wordText.setText(word);
-        changeTextSize(word);
+        changeTextSize(word,isChinese);
         mainPanel.add(wordText);
         mainFrame.getContentPane().add(BorderLayout.CENTER,mainPanel);
     }
@@ -123,9 +117,19 @@ class VocabularyCardGUI{
         buildGUI();
     }
 
-    public void changeTextSize(String word){
+    public void setWordIndex(){//顯示當前的生字
+        int number = currentNumber + 1;
+        String index = "" + number +"/"+ wordLength ;
+        currentWordIndex.setText(index);
+    }
+
+    public void changeTextSize(String word,boolean check){
         int len = word.length();
-        wordText.setFont(new Font("Dialog",1,200 - len * 5));
+        if(check){//中文的情況
+            wordText.setFont(new Font("Dialog",1,200 - len * 7));
+        }else {
+            wordText.setFont(new Font("Dialog", 1, 200 - len * 5));
+        }
     }
 
     public void showText(boolean choose , int index){//用作判斷顯示的文本
@@ -135,7 +139,7 @@ class VocabularyCardGUI{
         }else {
             word = englishWord.get(index);
         }
-        changeTextSize(word);
+        changeTextSize(word,choose);
         wordText.setText(word);
     }
 
@@ -149,7 +153,6 @@ class VocabularyCardGUI{
                 isChinese = true;
             }
 
-            setWordIndex();
         }
     }
 
@@ -160,7 +163,7 @@ class VocabularyCardGUI{
                 currentNumber++;
             }else{
                 currentNumber = 0 ;
-                showText(isChinese, currentNumber + 1);
+                showText(isChinese, currentNumber );
             }
 
             setWordIndex();
