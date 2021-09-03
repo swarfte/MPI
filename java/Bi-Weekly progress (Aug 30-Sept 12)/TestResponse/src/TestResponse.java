@@ -14,8 +14,8 @@ public class TestResponse {
 }
 
 class TestResponseGUI{
-	public int width = 400;//寬度
-    public int height = 400;//高度
+	public int width = 500;//寬度
+    public int height = 500;//高度
     public Font textFont = new Font ("Dialog", Font.BOLD,40);
     private JFrame mainFrame = new JFrame("測試反應");//主框架
     private JPanel mainPanel = new JPanel();//主畫面
@@ -35,7 +35,7 @@ class TestResponseGUI{
 
     public void startTest(){//點擊按鈕時啟動測試
             isStart = true;
-            time = Math.random() * 5 * 1000;//生成0~7秒的數字
+            time    = Math.random() * 5 * 1000;//生成0~7秒的數字
     }
 
     public void checkTouch(){//檢測第2次點擊是否符合時間
@@ -51,7 +51,7 @@ class TestResponseGUI{
             TimeUnit.MILLISECONDS.sleep((long) time);
             mainPanel.setBackground(Color.red);
 
-            useTime.setText("");
+            useTime.setText("點擊按鈕!!!");
             clickButton.setText("Click");
             clickButton.setBackground(Color.CYAN);
             clickButton.setForeground(Color.RED);
@@ -63,8 +63,13 @@ class TestResponseGUI{
     }
 
     public void textShowTime(){//顯示兩次間佢的時間
-        String showTime = interval / 1000000 + "ms";//轉換單位
-        useTime.setText(showTime);//顯示時間
+        int realTime = (int) Math.round(interval / 1000000.0) -100;
+        if (realTime > 100) {//人類極限速度?
+            String showTime = realTime + "ms";//轉換單位
+            useTime.setText(showTime);//顯示時間
+        }else{
+            useTime.setText("測試時間無效");
+        }
     }
 
 
@@ -73,6 +78,7 @@ class TestResponseGUI{
         mainPanel.add(useTime);
         useTime.setFont(textFont);
         useTime.setForeground(Color.CYAN);
+        useTime.setText("點擊Start等待屏幕變紅");
 
         mainPanel.setBackground(Color.white);
         mainFrame.getContentPane().add(BorderLayout.CENTER,mainPanel);
