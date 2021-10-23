@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Time Manage</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="reset">Reset</string>
+    <string name="random">Random</string>
+    <string name="choice">Choice</string>
+    <string name="remind">Take a break until time is over :)</string>
+    <string name="second">Second</string>
+</resources>
